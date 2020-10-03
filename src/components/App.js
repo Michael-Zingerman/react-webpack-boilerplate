@@ -1,9 +1,21 @@
 import React from "react";
+import { TestForm } from "./StoreForm/StoreForm";
+import { useStore } from "./store/StoreContext"; //"../store/StoreContext";
+import { useObserver } from "mobx-react";
 
 export default function App() {
-  return (
+  const dataStore = useStore();
+  return useObserver(() => (
     <>
-      <h1>React Starter!</h1>
+      <ul>
+        {dataStore.data.map((data) => (
+          <li onClick={() => dataStore.removeData(data.text)} key={data.text}>
+            {data.text}
+          </li>
+        ))}
+      </ul>
+
+      <TestForm />
     </>
-  );
+  ));
 }
